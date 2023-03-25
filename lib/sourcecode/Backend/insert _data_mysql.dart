@@ -8,6 +8,7 @@ import 'package:user/models/item_model.dart';
 import 'package:user/views/form.dart';
 import 'package:user/widgets/dropdown_button.dart';
 import 'package:user/widgets/widget_text.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class InsertData extends StatefulWidget {
   const InsertData({super.key});
@@ -33,6 +34,7 @@ class _InsertDataState extends State<InsertData> {
   final itemDetailsController = TextEditingController();
   final itemSNController = TextEditingController();
   final amountController = TextEditingController();
+  final imgURLController = TextEditingController();
   String _selectedTypeValue = 'โทรศัพท์';
   String _selectedBrandValue = 'Other';
 
@@ -69,7 +71,7 @@ class _InsertDataState extends State<InsertData> {
     int selectedIndex2 = _dropdownBrandValue.indexOf(_selectedBrandValue);
     db.getConnection().then((conn) {
       String sqlQuery =
-          'INSERT INTO `ewastedb`.`item` (`item_name`, `item_desc`, `amount`, `ewtype_id`, `brand_id` , `item_SN`) VALUES (?, ?, ?, ?, ?, ?)';
+          'INSERT INTO `ewastedb`.`item` (`item_name`, `item_desc`, `amount`, `ewtype_id`, `brand_id` , `item_SN`, `img_url`) VALUES (?, ?, ?, ?, ?, ?,?)';
       //INSERT INTO `ewastedb`.`item` (`item_name`, `item_desc`, `amount`, `ewtype_id`, `item_SN`) VALUES ('test g', 'test g', '1', '5', '1234');
       conn.query(sqlQuery, [
         itemNameController.text,
@@ -79,6 +81,7 @@ class _InsertDataState extends State<InsertData> {
         selectedIndex2.toString(),
         // _selectedTypeValue,
         itemSNController.text,
+        imgURLController.text
       ]);
       setState(() {});
       print("Data Added");
@@ -95,7 +98,18 @@ class _InsertDataState extends State<InsertData> {
     itemDetailsController.dispose();
     amountController.dispose();
     itemSNController.dispose();
+    imgURLController.dispose();
   }
+
+// // function to open Google.com in browser
+//   void _launchURL() async {
+//     const url = 'https://www.google.com';
+//     if (await canLaunch(url)) {
+//       await launch(url);
+//     } else {
+//       throw 'Could not launch $url';
+//     }
+//   }
 
   @override
   Widget build(BuildContext context) {
@@ -120,11 +134,11 @@ class _InsertDataState extends State<InsertData> {
                 hintText: "รายละเอียดสินค้า", border: OutlineInputBorder()),
           ),
           SizedBox(height: 15),
-          Text('จำนวน'),
+          Text('จำนวน 1 หน่วย'),
           TextFormField(
             controller: amountController,
             decoration: const InputDecoration(
-                hintText: "จำนวน", border: OutlineInputBorder()),
+                hintText: "จำนวน 1 หน่วย", border: OutlineInputBorder()),
             validator: (value) {
               if (value!.isEmpty) {
                 return 'โปรดระบุจำนวนสินค้า = 1';
@@ -195,12 +209,66 @@ class _InsertDataState extends State<InsertData> {
             decoration: InputDecoration(
                 hintText: "หมายเลขเครื่อง", border: OutlineInputBorder()),
           ),
-          TextButton(
-              onPressed: () {
-                insertData();
-                print('Data inserted successfully!');
+          SizedBox(
+            height: 15,
+          ),
+          Text(
+              'กรุณากดปุ่ม ไอคอนรูปกล้อง เพื่ออัปโหลดรูปภาพลงเว็บไซต์ และ ตัดลอก URL มาวางในช่องด้านล่าง'),
+          SizedBox(
+            height: 15,
+          ),
+          Center(
+            child: ElevatedButton(
+              onPressed: () async {
+                final Uri url = Uri.parse("https://postimages.org/");
+                await launchUrl(url);
               },
-              child: const Text('Insert data'))
+              style: ElevatedButton.styleFrom(
+                primary: Colors.green,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.camera_alt,
+                    color: Colors.white,
+                  ),
+                  const SizedBox(width: 8),
+                  const Text(
+                    'Link',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          // Column(
+          //   children: [
+          //     ElevatedButton(
+          //       child: Text("Link"),
+          //       onPressed: () async {
+          //         final Uri url = Uri.parse("https://twitter.com/home");
+          //         launchUrl(url);
+          //       },
+          //     ),
+          //   ],
+          // ),
+
+          Text('URL รูปภาพ'),
+          TextFormField(
+            controller: imgURLController,
+            decoration: InputDecoration(
+                hintText: "กรุณากดปุ่ม เพื่ออัปโหลดและคัดลอก URL รูปภาพ",
+                border: OutlineInputBorder()),
+          ),
+
+          TextButton(
+            onPressed: () {
+              insertData();
+              print('Data inserted successfully!');
+            },
+            child: const Text('Insert data'),
+          ),
         ],
       ),
     );

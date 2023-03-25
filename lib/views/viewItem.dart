@@ -20,7 +20,7 @@ class _viewItemState extends State<viewItem> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("view Item"),
+        title: Text("ดูรายการขยะ"),
       ),
       body: Padding(
         padding: EdgeInsets.all(18.0),
