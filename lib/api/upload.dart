@@ -197,8 +197,9 @@ class _UploadDataPageState extends State<UploadDataPage> {
                     controller: amountController,
                     decoration: InputDecoration(
                       labelText: 'จำนวนสินค้า (สามารถเพิ่มครั้งละ 1 รายการ )',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(35.0),
+                      border: const OutlineInputBorder(),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.green.shade300),
                       ),
                     ),
                     validator: (value) {

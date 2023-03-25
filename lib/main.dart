@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+
+import 'package:user/uploadImage/main_upload.dart';
+import 'package:user/views/receive_job_driver.dart';
+import 'package:user/views/show_map.dart';
 import 'package:user/views/test.dart';
 import 'package:user/views/upload_image.dart';
-
+import 'package:user/sourcecode/Backend/insert _data_mysql.dart';
 import 'api/upload.dart';
 import 'views/additem.dart';
 import 'views/viewItem.dart';
@@ -31,8 +35,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.green,
       ),
-      //home: const MyHomePage(title: 'Flutter Demo Home Page'),
-      home: UploadDataPage(),
+      home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
@@ -55,7 +58,7 @@ class _MyHomePageState extends State<MyHomePage> {
         //fixed height for first half
         Container(
           width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height / 2.5,
+          height: MediaQuery.of(context).size.height / 3.2,
           padding: EdgeInsets.all(10.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -246,8 +249,10 @@ class _MyHomePageState extends State<MyHomePage> {
                     //
                     InkWell(
                       onTap: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => addItem()));
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => InsertData()));
                       },
                       child: Container(
                         decoration: BoxDecoration(
@@ -309,7 +314,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => requestCollector()));
+                                builder: (context) => showMap2()));
                       },
                       child: Container(
                         decoration: BoxDecoration(
@@ -446,12 +451,14 @@ class _MyHomePageState extends State<MyHomePage> {
 
 /* 
 
-echo "# NSC" >> README.md
+echo "# userEwaste" >> README.md
 git init
 git add README.md
 git commit -m "first commit"
 git branch -M main
-git remote add origin https://github.com/siriinthira/NSC.git
+git remote add origin https://github.com/siriinthira/userEwaste.git
 git push -u origin main
+
+https://github.com/siriinthira/userEwaste.git
 
 */

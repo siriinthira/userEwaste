@@ -124,17 +124,20 @@ class _MyFormState extends State<MyForm> {
         child: ListView(
           children: [
             const SizedBox(
-              height: 20,
+              height: 5, 
             ),
             _image != null
                 ? Image.file(
                     _image!,
-                    width: 180,
-                    height: 180,
+                    width: 100,
+                    height: 100,
                     fit: BoxFit.cover,
                   )
                 : Image.network(
-                    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSalEj8tnk7AywBgsPErBHh2_8vFwc2yZty-mqmzy3t6pP_lN3WnokkH8ghoeFPZ13cs3g&usqp=CAU'),
+                    'https://cdn-icons-png.flaticon.com/512/1942/1942191.png',
+                    width: 100,
+                    height: 100,
+                  ),
             Container(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -160,7 +163,7 @@ class _MyFormState extends State<MyForm> {
             // const Text("ข้อมูลขยะอิเล็กทรอนิกส์"),
             // const Text("กรอกรายละเอียดเกี่ยวกับขยะอิเล็กทรอนิกส์ของคุณ"),
             const SizedBox(
-              height: 20,
+              height: 10,
             ),
 
             /* ------ Form ----- */
@@ -177,7 +180,7 @@ class _MyFormState extends State<MyForm> {
                     keyboardType: TextInputType.phone,
                   ),
                   const SizedBox(
-                    height: 30.0,
+                    height: 5.0,
                   ),
                   MyTextField(
                     fieldName: "ชื่อผลิตภัณฑ์",
@@ -205,11 +208,7 @@ class _MyFormState extends State<MyForm> {
                     keyboardType: TextInputType.phone,
                   ),
                   const SizedBox(
-                    height: 30.0,
-                  ),
-
-                  SizedBox(
-                    height: 20,
+                    height: 5.0,
                   ),
 
                   //DropDown Menu
@@ -252,7 +251,7 @@ class _MyFormState extends State<MyForm> {
                     }).toList(),
                   ),
 
-                  const SizedBox(height: 20.0),
+                  const SizedBox(height: 0.0),
 
                   MyButton(onPress: () {
                     _productName = _productController.text;

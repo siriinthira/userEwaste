@@ -28,6 +28,7 @@ class MyTextField extends StatelessWidget {
           } else
             ' ';
         },
+        obscureText: true,
         controller: myController,
         decoration: InputDecoration(
           labelText: fieldName,

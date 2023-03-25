@@ -33,19 +33,19 @@ class _viewItemState extends State<viewItem> {
                 endActionPane: ActionPane(
                   motion: DrawerMotion(),
                   children: [
-                    SlidableAction(
-                      // An action can be bigger than the others.
-                      // flex: 2,
-                      onPressed: (context) {
-                        c.updateItem(c.product[index].item_id);
+                    // SlidableAction(
+                    //   // An action can be bigger than the others.
+                    //   // flex: 2,
+                    //   onPressed: (context) {
+                    //     c.updateItem(c.product[index].item_id);
 
-                        setState(() {});
-                      },
-                      backgroundColor: Color.fromARGB(255, 219, 197, 61),
-                      foregroundColor: Colors.white,
-                      icon: Icons.edit,
-                      label: 'Edit',
-                    ),
+                    //     setState(() {});
+                    //   },
+                    //   backgroundColor: Color.fromARGB(255, 219, 197, 61),
+                    //   foregroundColor: Colors.white,
+                    //   icon: Icons.edit,
+                    //   label: 'Edit',
+                    // ),
                     SlidableAction(
                       onPressed: (context) {
                         c.removeItem(c.product[index].item_id);
