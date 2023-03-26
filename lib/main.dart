@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:user/sourcecode/Backend/insert_image_data_mysql.dart';
 
 import 'package:user/uploadImage/main_upload.dart';
+import 'package:user/views/get_location.dart';
 import 'package:user/views/receive_job_driver.dart';
 import 'package:user/views/show_map.dart';
 import 'package:user/views/test.dart';
@@ -9,7 +10,9 @@ import 'package:user/views/upload_image.dart';
 import 'package:user/sourcecode/Backend/insert _data_mysql.dart';
 import 'api/upload.dart';
 
+import 'sourcecode/Frontend/qr_code.dart';
 import 'views/additem.dart';
+import 'views/sendItem_fill_in_location.dart';
 import 'views/viewItem.dart';
 import 'views/requestCollector.dart';
 import 'views/searchbin.dart';
@@ -37,8 +40,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.green,
       ),
-      // home: const MyHomePage(title: 'Flutter Demo Home Page'),
-      home: InsertData(),
+      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      // home: sendItem(),
     );
   }
 }
@@ -317,7 +320,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => showMap2()));
+                                builder: (context) => requestCollector()));
                       },
                       child: Container(
                         decoration: BoxDecoration(
@@ -358,7 +361,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Icon(
-                              Icons.directions_walk,
+                              Icons.nordic_walking,
                               size: 50,
                               color: Colors.green,
                             ),
@@ -456,14 +459,15 @@ class _MyHomePageState extends State<MyHomePage> {
 
 echo "# userEwaste" >> README.md
 git init
-git add README.md
-git commit -m "first commit"
+git add README.md                     **
+git commit -m "first commit"             **
 git branch -M main
 git remote add origin https://github.com/siriinthira/userEwaste.git
-git push -u origin main
+git push -u origin main       **
 
 
 
 https://github.com/siriinthira/userEwaste.git
 
 */
+

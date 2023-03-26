@@ -18,9 +18,7 @@ class InsertData extends StatefulWidget {
 }
 
 class _InsertDataState extends State<InsertData> {
-  //list for dropdown menu
-
-  //select item from the table
+  //insert item into the table
   var db = new Mysql();
   var item_name = "";
   var item_desc = "";
@@ -37,6 +35,8 @@ class _InsertDataState extends State<InsertData> {
   final imgURLController = TextEditingController();
   String _selectedTypeValue = 'โทรศัพท์';
   String _selectedBrandValue = 'Other';
+
+  //list for dropdown menu
 
   List<String> _dropdownTypeValue = [
     'โทรศัพท์',
