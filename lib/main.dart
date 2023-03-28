@@ -15,6 +15,7 @@ import 'sourcecode/api/upload.dart';
 import 'sourcecode/Frontend/qr_code.dart';
 import 'sourcecode/Frontend/additem.dart';
 import 'sourcecode/Frontend/viewItem.dart';
+import 'views/receive_task_from_user/view_request.dart';
 import 'views/request_collector/request_collector.dart';
 import 'views/search_nearby_bin/searchbin.dart';
 import 'views/user_send_item/sendItem.dart';
@@ -41,8 +42,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.green,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-      //home: AddItem(),
+      // home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: viewRequest(),
     );
   }
 }
