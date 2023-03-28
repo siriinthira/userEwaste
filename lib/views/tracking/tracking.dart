@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class tracking extends StatefulWidget {
   const tracking({super.key});
@@ -13,8 +12,9 @@ class _trackingState extends State<tracking> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("tracking"),
+        title: Text('ติดตามสถานะการขนส่ง'),
       ),
+      body: Center(),
     );
   }
 }

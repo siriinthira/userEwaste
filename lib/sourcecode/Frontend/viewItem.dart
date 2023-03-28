@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import '../controller/itemController.dart';
-import 'package:user/views/form.dart';
+import '../../controller/itemController.dart';
+import 'package:user/sourcecode/Frontend/form.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
 class viewItem extends StatefulWidget {

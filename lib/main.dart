@@ -1,23 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:user/sourcecode/Backend/insert_image_data_mysql.dart';
+import 'package:user/sourcecode/Backend/insert_Data/insert_image_data_mysql.dart';
+import 'package:user/sourcecode/Frontend/floating_action_button2.dart';
+import 'package:user/sourcecode/Frontend/form.dart';
 
-import 'package:user/uploadImage/main_upload.dart';
-import 'package:user/views/get_location.dart';
-import 'package:user/views/receive_job_driver.dart';
-import 'package:user/views/show_map.dart';
-import 'package:user/views/test.dart';
-import 'package:user/views/upload_image.dart';
-import 'package:user/sourcecode/Backend/insert _data_mysql.dart';
-import 'api/upload.dart';
+import 'package:user/sourcecode/uploadImage/main_upload.dart';
+import 'package:user/views/addItem/add_item.dart';
+import 'package:user/views/map_test/get_location.dart';
 
+import 'package:user/sourcecode/Frontend/show_map.dart';
+
+import 'package:user/sourcecode/Backend/insert_Data/insert%20_data_mysql.dart';
+import 'package:user/views/viewItem/view_item.dart';
+import 'sourcecode/api/upload.dart';
 import 'sourcecode/Frontend/qr_code.dart';
-import 'views/additem.dart';
-import 'views/sendItem_fill_in_location.dart';
-import 'views/viewItem.dart';
-import 'views/requestCollector.dart';
-import 'views/searchbin.dart';
-import 'views/sendItem.dart';
-import 'views/tracking.dart';
+import 'sourcecode/Frontend/additem.dart';
+import 'sourcecode/Frontend/viewItem.dart';
+import 'views/request_collector/request_collector.dart';
+import 'views/search_nearby_bin/searchbin.dart';
+import 'views/user_send_item/sendItem.dart';
+import 'views/tracking/tracking.dart';
 import 'package:get/get.dart';
 
 // void main() {
@@ -41,7 +42,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.green,
       ),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
-      // home: sendItem(),
+      //home: AddItem(),
     );
   }
 }
@@ -255,10 +256,8 @@ class _MyHomePageState extends State<MyHomePage> {
                     //
                     InkWell(
                       onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => InsertData()));
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => AddItem()));
                       },
                       child: Container(
                         decoration: BoxDecoration(
@@ -289,7 +288,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => viewItem()));
+                                builder: (context) => dataView()));
                       },
                       child: Container(
                         decoration: BoxDecoration(

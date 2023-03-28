@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:user/views/additem.dart';
+import 'package:user/sourcecode/Frontend/additem.dart';
 import 'package:user/models/item_model.dart';
-import 'package:user/views/form.dart';
+import 'package:user/sourcecode/Frontend/form.dart';
 
 class ItemController extends GetxController {
   //List

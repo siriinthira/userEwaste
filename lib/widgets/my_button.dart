@@ -3,7 +3,7 @@ import 'dart:ffi' hide Size;
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
-import 'package:user/views/details.dart';
+import 'package:user/sourcecode/Frontend/details.dart';
 
 class MyButton extends StatelessWidget {
   const MyButton({

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:user/views/details.dart';
-import 'package:user/views/form.dart';
+import 'package:user/sourcecode/Frontend/details.dart';
+import 'package:user/sourcecode/Frontend/form.dart';
+
+// additem --> form --> detail
 
 class addItem extends StatefulWidget {
   const addItem({super.key});
