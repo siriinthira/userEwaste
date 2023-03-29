@@ -2,15 +2,47 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'dart:async';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:mysql1/mysql1.dart';
 
-class receiveTask extends StatefulWidget {
-  const receiveTask({super.key});
+import '../qr_code/qr_code_scanner.dart';
+import 'delivery_success.dart';
+
+//insert a textfield bin_id using mysql1 and the last elevated button called 'ส่งขยะเรียบร้อยแล้ว' with submit function
+
+class ArriveAtBin extends StatefulWidget {
+  const ArriveAtBin({super.key});
 
   @override
-  State<receiveTask> createState() => _receiveTaskState();
+  State<ArriveAtBin> createState() => _ArriveAtBinState();
 }
 
-class _receiveTaskState extends State<receiveTask> {
+class _ArriveAtBinState extends State<ArriveAtBin> {
+  //insert item into table
+  var db = new Mysql();
+  var bin_id = "";
+  final binIdController = TextEditingController();
+
+  void insertData() async {
+    db.getConnection().then((conn) {
+      String sqlQuery =
+          'INSERT INTO `ewastedb`.`request` (`bin_id`) VALUES (?)';
+
+      conn.query(sqlQuery, [
+        binIdController.text,
+      ]);
+      setState(() {});
+      print("Data Added");
+      print(binIdController.text);
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    binIdController.dispose();
+  }
+
+  //Calculate Coin - ยังไม้ได้ใช้
   void calculateCoin(int weight) {
     if (weight >= 1 && weight < 5) {
       var coin = 0.25;
@@ -55,7 +87,7 @@ class _receiveTaskState extends State<receiveTask> {
     var user_lng = 100.60415036236294;
     return Scaffold(
       appBar: AppBar(
-        title: Text('รับงานจากผู้ใช้'),
+        title: Text('ผู้อาสาเดินทางมาถึงถังขยะ'),
       ),
       body: ListView(
         children: [
@@ -127,64 +159,48 @@ class _receiveTaskState extends State<receiveTask> {
                   ),
                 ],
               ),
-              SizedBox(
-                height: 30,
-              ),
-              SizedBox(
-                width: 360,
-                height: 80,
-                child: Card(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.max,
-                    children: <Widget>[
-                      const ListTile(
-                        leading: Icon(Icons.share_location),
-                        title: Text('อุทยานวิทยาศาสตร์ประเทศไทย'),
-                        subtitle: Text(
-                          '14.079379523123846, 100.60396022687425',
-                          style: TextStyle(color: Colors.black),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 5,
-              ),
-              SizedBox(
-                width: 360,
-                height: 65,
-                child: Card(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      const ListTile(
-                        leading: Icon(Icons.generating_tokens),
-                        title: Text('จำนวนเหรียญที่ได้รับ : 0.25 เหรียญ'),
-                        // subtitle:
-                        //     Text('Music by Julie Gable. Lyrics by Sidney Stein.'),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
               const SizedBox(height: 30),
+              SizedBox(height: 15),
+              Text(
+                'แสกนคิวอาร์โค้ดเพื่อตรวจสอบหมายเลขบนถังขยะ',
+                style: TextStyle(fontWeight: FontWeight.w500, fontSize: 17),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(24.0),
+                child: TextFormField(
+                  controller: binIdController,
+                  decoration: const InputDecoration(
+                      hintText: "กรุณาแสกนคิวอาร์เพื่อกรอกหมายเลขบนถังขยะ",
+                      border: OutlineInputBorder()),
+                ),
+              ),
+              SizedBox(height: 15),
               SizedBox(
-                width: 210,
+                width: 240,
                 child: ElevatedButton(
                   style: style,
-                  onPressed: () {},
-                  child: const Text('คลิกดูรายการขยะ'),
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => QRCodeScanner()));
+                  },
+                  child: const Text('แสกนคิวอาร์โค้ด'),
                 ),
               ),
               const SizedBox(height: 9),
               SizedBox(
-                width: 210,
+                width: 240,
                 child: ElevatedButton(
                   style: style,
-                  onPressed: () {},
-                  child: const Text('กดเพื่อรับงาน'),
+                  onPressed: () {
+                    insertData();
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => SuccessDelivery()));
+                  },
+                  child: const Text('ส่งขยะเรียบร้อย'),
                 ),
               ),
               const SizedBox(height: 35),
@@ -193,5 +209,22 @@ class _receiveTaskState extends State<receiveTask> {
         ],
       ),
     );
+  }
+}
+
+class Mysql {
+  static String host = 'utcccs.cj5octuotk3f.ap-northeast-1.rds.amazonaws.com',
+      user = 'ewuser',
+      password = 'ewuser123',
+      db = 'ewastedb';
+
+  static int port = 3306;
+
+  Mysql();
+
+  Future<MySqlConnection> getConnection() async {
+    var settings = new ConnectionSettings(
+        host: host, port: port, user: user, password: password, db: db);
+    return await MySqlConnection.connect(settings);
   }
 }

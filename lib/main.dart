@@ -5,11 +5,16 @@ import 'package:user/sourcecode/Frontend/form.dart';
 
 import 'package:user/sourcecode/uploadImage/main_upload.dart';
 import 'package:user/views/addItem/add_item.dart';
+import 'package:user/views/google_places/google_place.dart';
+import 'package:user/views/google_places/google_route.dart';
 import 'package:user/views/map_test/get_location.dart';
 
 import 'package:user/sourcecode/Frontend/show_map.dart';
 
 import 'package:user/sourcecode/Backend/insert_Data/insert%20_data_mysql.dart';
+import 'package:user/views/receive_task_from_user/google_map.dart';
+import 'package:user/views/receive_task_from_user/nearbybin.dart';
+import 'package:user/views/receive_task_from_user/receive_task_from_user.dart';
 import 'package:user/views/viewItem/view_item.dart';
 import 'sourcecode/api/upload.dart';
 import 'sourcecode/Frontend/qr_code.dart';
@@ -22,12 +27,7 @@ import 'views/user_send_item/sendItem.dart';
 import 'views/tracking/tracking.dart';
 import 'package:get/get.dart';
 
-// void main() {
-//   // runApp(GetMaterialApp(home: MyApp()));
-//   runApp(GetMaterialApp(home: DemoUploadImage()));
-// }
 void main() {
-  // runApp(GetMaterialApp(home: MyApp()));
   runApp(GetMaterialApp(home: MyApp()));
 }
 

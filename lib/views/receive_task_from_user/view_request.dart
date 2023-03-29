@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mysql1/mysql1.dart';
-import 'package:user/views/receive_task_from_user/receive_task.dart';
+import 'package:user/views/receive_task_from_user/receive_task_from_user.dart';
 
 class viewRequest extends StatefulWidget {
   const viewRequest({super.key});
@@ -54,7 +54,8 @@ class _viewRequestState extends State<viewRequest> {
                   Text('รหัสสินค้า: ${item[index][0]}'),
                   Text('ชื่อสินค้า: ${item[index][1]}'),
                   Text('จำนวน: ${item[index][3]}'),
-                  Text('ระยะทาง: ${item[index][19]} กม.'),
+                  Text('ละติจูด: ${item[index][12]} '),
+                  Text('ลองจิจูด: ${item[index][13]} '),
                 ],
               ),
               // subtitle: Text('Item name: ${item[index][1]}'),
