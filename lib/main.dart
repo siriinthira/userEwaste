@@ -12,7 +12,7 @@ import 'package:user/views/map_test/get_location.dart';
 import 'package:user/sourcecode/Frontend/show_map.dart';
 
 import 'package:user/sourcecode/Backend/insert_Data/insert%20_data_mysql.dart';
-import 'package:user/views/receive_task_from_user/google_map.dart';
+import 'package:user/views/receive_task_from_user/google_map_api.dart';
 import 'package:user/views/receive_task_from_user/nearbybin.dart';
 import 'package:user/views/receive_task_from_user/receive_task_from_user.dart';
 import 'package:user/views/viewItem/view_item.dart';
@@ -43,7 +43,8 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.green,
       ),
       // home: const MyHomePage(title: 'Flutter Demo Home Page'),
-      home: viewRequest(),
+      //home: MapSample(),
+      home: NearByBin(),
     );
   }
 }

@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:get/get.dart';
 import 'dart:async';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:user/views/receive_task_from_user/arrive_at_bin.dart';
 import 'package:user/views/receive_task_from_user/main_location.dart';
 import 'package:user/views/receive_task_from_user/view_selected_item.dart';
 
+import 'package:location/location.dart';
 import 'delivery_success.dart';
 
 class NearByBin extends StatefulWidget {
@@ -16,10 +18,11 @@ class NearByBin extends StatefulWidget {
 }
 
 class _NearByBinState extends State<NearByBin> {
+  //Google Map
   Completer<GoogleMapController> _controller = Completer();
   // on below line we have specified camera position
   static final CameraPosition _kGoogle = const CameraPosition(
-    target: LatLng(20.42796133580664, 80.885749655962),
+    target: LatLng(14.071295662171114, 100.61685753122902),
     zoom: 14.4746,
   );
 
@@ -29,7 +32,7 @@ class _NearByBinState extends State<NearByBin> {
       markerId: MarkerId('1'),
       position: LatLng(14.071295662171114, 100.61685753122902),
       infoWindow: InfoWindow(
-        title: 'My position',
+        title: '$LatLng',
       ),
     ),
     Marker(
@@ -61,10 +64,18 @@ class _NearByBinState extends State<NearByBin> {
 
   @override
   Widget build(BuildContext context) {
+    Future<Map<String, double>> _getCurrentLocation() async {
+      Position currentPosition = await Geolocator.getCurrentPosition();
+      double latitude = currentPosition.latitude;
+      double longitude = currentPosition.longitude;
+      return {'latitude': latitude, 'longitude': longitude};
+    }
+
     final ButtonStyle style =
         ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20));
     var user_lat = 14.079379523123846;
     var user_lng = 100.60415036236294;
+
     return Scaffold(
       appBar: AppBar(
         title: Text('ค้นหาถังขยะในบริเวณใกล้เคียง'),
@@ -93,6 +104,17 @@ class _NearByBinState extends State<NearByBin> {
                       onMapCreated: (GoogleMapController controller) {
                         _controller.complete(controller);
                       },
+                      // ignore: prefer_collection_literals
+                      circles: Set<Circle>.of([
+                        Circle(
+                          circleId: CircleId("1"),
+                          center: LatLng(
+                              (14.071295662171114), (100.61685753122902)),
+                          radius: 690,
+                          strokeWidth: 2,
+                          fillColor: Color(0xFF006491).withOpacity(0.2),
+                        ),
+                      ]),
                     ),
                   ),
                 ),
@@ -113,14 +135,16 @@ class _NearByBinState extends State<NearByBin> {
                               value.longitude.toString());
 
                           // marker added for current users location
-                          _markers.add(Marker(
-                            markerId: MarkerId("1"),
-                            position: LatLng(value.latitude, value.longitude),
-                            infoWindow: InfoWindow(
-                              title:
-                                  ' คุณอยู่ที่นี่ ${value.latitude} ${value.longitude} ',
+                          _markers.add(
+                            Marker(
+                              markerId: MarkerId("1"),
+                              position: LatLng(value.latitude, value.longitude),
+                              infoWindow: InfoWindow(
+                                title:
+                                    ' คุณอยู่ที่นี่ ${value.latitude} ${value.longitude} ',
+                              ),
                             ),
-                          ));
+                          );
 
                           // specified current users location
                           CameraPosition cameraPosition = new CameraPosition(
