@@ -6,14 +6,14 @@ import 'dart:ui';
 
 import 'package:user/models/item_model.dart';
 
-class requestCollector extends StatefulWidget {
-  const requestCollector({super.key});
+class ARowOfData extends StatefulWidget {
+  const ARowOfData({super.key});
 
   @override
-  State<requestCollector> createState() => _requestCollectorState();
+  State<ARowOfData> createState() => _ARowOfDataState();
 }
 
-class _requestCollectorState extends State<requestCollector> {
+class _ARowOfDataState extends State<ARowOfData> {
   //insert item to the table
 
   //select item from the table

@@ -34,7 +34,7 @@ class _dataViewState extends State<dataView> {
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(
-        title: Text('data view'),
+        title: Text('ดูรายการขยะ'),
       ),
       body: ListView.builder(
         itemCount: item.length,

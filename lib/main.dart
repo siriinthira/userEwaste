@@ -1,31 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:user/sourcecode/Backend/insert_Data/insert_image_data_mysql.dart';
-import 'package:user/sourcecode/Frontend/floating_action_button2.dart';
-import 'package:user/sourcecode/Frontend/form.dart';
-
-import 'package:user/sourcecode/uploadImage/main_upload.dart';
+import 'package:get/get_connect/http/src/request/request.dart';
 import 'package:user/views/addItem/add_item.dart';
-import 'package:user/views/google_places/google_place.dart';
-import 'package:user/views/google_places/google_route.dart';
-import 'package:user/views/map_test/get_location.dart';
-
-import 'package:user/sourcecode/Frontend/show_map.dart';
-
-import 'package:user/sourcecode/Backend/insert_Data/insert%20_data_mysql.dart';
-import 'package:user/views/receive_task_from_user/googleAPI/google_map_api.dart';
-import 'package:user/views/receive_task_from_user/nearbybin.dart';
-import 'package:user/views/receive_task_from_user/receive_task_from_user.dart';
 import 'package:user/views/viewItem/view_item.dart';
-import 'sourcecode/api/upload.dart';
-import 'sourcecode/Frontend/qr_code.dart';
-import 'sourcecode/Frontend/additem.dart';
-import 'sourcecode/Frontend/viewItem.dart';
-import 'views/receive_task_from_user/view_request.dart';
-import 'views/request_collector/request_collector.dart';
 import 'views/search_nearby_bin/searchbin.dart';
 import 'views/user_send_item/sendItem.dart';
 import 'views/tracking/tracking.dart';
 import 'package:get/get.dart';
+import 'package:user/views/request_collector/request.dart';
 
 void main() {
   runApp(GetMaterialApp(home: MyApp()));
@@ -42,9 +23,9 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.green,
       ),
-      // home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: 'Flutter Demo Home Page'),
       //    home: MapSample(),
-      home: viewRequest(),
+      // home: viewRequest(),
     );
   }
 }
@@ -321,7 +302,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => requestCollector()));
+                                builder: (context) => RequestCollector()));
                       },
                       child: Container(
                         decoration: BoxDecoration(

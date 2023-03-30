@@ -93,6 +93,7 @@ flutter:
     - assets/locations.json
     - images/animate.gif
     - images/delivery.gif
+    - images/Message_senl.png
   #assets:
   # - assets/images/student_profile.jpg
   #   - images/a_dot_ham.jpeg
