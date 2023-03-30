@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_connect/http/src/request/request.dart';
 import 'package:user/views/addItem/add_item.dart';
+import 'package:user/views/tracking/demo.dart';
 import 'package:user/views/viewItem/view_item.dart';
 import 'views/search_nearby_bin/searchbin.dart';
 import 'views/user_send_item/sendItem.dart';
@@ -23,9 +24,9 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.green,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      // home: const MyHomePage(title: 'Flutter Demo Home Page'),
       //    home: MapSample(),
-      // home: viewRequest(),
+      home: DropdownDemo2(),
     );
   }
 }
@@ -364,7 +365,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => tracking()));
+                                builder: (context) => DropdownDemo()));
                       },
                       child: Container(
                         decoration: BoxDecoration(
