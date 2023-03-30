@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gif/flutter_gif.dart';
 import 'package:user/views/receive_task_from_user/nearbybin.dart';
 
-import 'from_user_to_nearby_bin.dart';
+import 'send_item_nearby_bin.dart';
 
 class SuccessDelivery extends StatefulWidget {
   const SuccessDelivery({super.key});

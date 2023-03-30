@@ -34,11 +34,19 @@ class _sendItemNearbyBinState extends State<sendItemNearbyBin> {
   // on below line we have created the list of markers
   final List<Marker> _markers = <Marker>[
     Marker(
-        markerId: MarkerId('1'),
-        position: LatLng(20.42796133580664, 75.885749655962),
-        infoWindow: InfoWindow(
-          title: 'My Position',
-        )),
+      markerId: MarkerId('1'),
+      position: LatLng(20.42796133580664, 75.885749655962),
+      infoWindow: InfoWindow(
+        title: 'My Position',
+      ),
+    ),
+    Marker(
+      markerId: MarkerId('2'),
+      position: LatLng(14.07892748920073, 100.60297357512478),
+      infoWindow: InfoWindow(
+        title: 'อุทยานวิทยาศาสตร์ประเทศไทย',
+      ),
+    ),
   ];
 
   // created method for getting user current location
@@ -91,7 +99,7 @@ class _sendItemNearbyBinState extends State<sendItemNearbyBin> {
                 ),
               ),
               SizedBox(
-                height: 30,
+                height: 10,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
@@ -111,7 +119,8 @@ class _sendItemNearbyBinState extends State<sendItemNearbyBin> {
                             position: LatLng(value.latitude, value.longitude),
                             infoWindow: InfoWindow(
                               title:
-                                  ' คุณอยู่ที่นี่ ${value.latitude} ${value.longitude} ',
+                                  // 'พิกัดของผู้ใช้ : 14.07866732509696, 100.60400354337204'
+                                  ' คุณอยู่ที่นี่: ${value.latitude} ${value.longitude} ',
                             ),
                           ));
 
@@ -134,15 +143,16 @@ class _sendItemNearbyBinState extends State<sendItemNearbyBin> {
                 ],
               ),
               SizedBox(
-                height: 30,
+                height: 10,
               ),
               SizedBox(
                 width: 360,
-                height: 80,
+                height: 100,
                 child: Card(
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
                     children: <Widget>[
+                      Text('พิกัดของผู้ใช้'),
                       const ListTile(
                         leading: Icon(Icons.share_location),
                         title: Text('อุทยานวิทยาศาสตร์ประเทศไทย'),
@@ -175,7 +185,7 @@ class _sendItemNearbyBinState extends State<sendItemNearbyBin> {
                   ),
                 ),
               ),
-              const SizedBox(height: 30),
+              const SizedBox(height: 10),
               SizedBox(
                 width: 240,
                 child: ElevatedButton(
@@ -189,7 +199,7 @@ class _sendItemNearbyBinState extends State<sendItemNearbyBin> {
                   child: const Text('คลิกดูรายการขยะ'),
                 ),
               ),
-              const SizedBox(height: 9),
+              const SizedBox(height: 5),
               SizedBox(
                 width: 240,
                 child: ElevatedButton(

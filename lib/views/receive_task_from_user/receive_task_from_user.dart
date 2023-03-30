@@ -3,8 +3,10 @@ import 'package:geolocator/geolocator.dart';
 import 'dart:async';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_maps_routes/google_maps_routes.dart';
+import 'package:mysql1/mysql1.dart';
 import 'package:user/views/receive_task_from_user/view_selected_item.dart';
-import 'from_user_to_nearby_bin.dart';
+import 'send_item_nearby_bin.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class receiveTask extends StatefulWidget {
   const receiveTask({super.key});
@@ -64,10 +66,17 @@ class _receiveTaskState extends State<receiveTask> {
   // on below line we have created the list of markers
   final List<Marker> _markers = <Marker>[
     Marker(
-        markerId: MarkerId('1'),
-        position: LatLng(20.42796133580664, 75.885749655962),
+      markerId: MarkerId('1'),
+      position: LatLng(14.071430942047572, 100.61692458471443),
+      infoWindow: InfoWindow(
+        title: 'My Position: Thammasat University Rangsit Campus',
+      ),
+    ),
+    Marker(
+        markerId: MarkerId('2'),
+        position: LatLng(14.078688138236172, 100.60404109429771),
         infoWindow: InfoWindow(
-          title: 'My Position',
+          title: 'อุทยานวิทยาศาสตร์ประเทศไทย',
         )),
   ];
 
@@ -80,6 +89,48 @@ class _receiveTaskState extends State<receiveTask> {
       print("ERROR" + error.toString());
     });
     return await Geolocator.getCurrentPosition();
+  }
+
+//insert item into the table
+  var db = new Mysql();
+  double? rp_lat;
+  double? rp_lng;
+  var status_code = 2;
+  DateTime? rp_timestamp;
+  int agent_id = 1;
+
+  void insertData() async {
+    // Check if the user has granted permission to access the device's location
+    var locationPermissionStatus = await Permission.location.request();
+
+    if (locationPermissionStatus.isDenied) {
+      // Permission was denied by the user, handle the error
+      print('Location permission was denied by the user.');
+      return;
+    }
+
+    final now = DateTime.now();
+    Position currentPosition = await Geolocator.getCurrentPosition();
+    double latitude = currentPosition.latitude;
+    double longitude = currentPosition.longitude;
+
+    db.getConnection().then((conn) {
+      String sqlQuery =
+          'INSERT INTO `ewastedb`.`request_process` (`rp_lat`, `rp_lng`, `status_code`, `rp_timestamp`, `agent_id` ) VALUES (?, ?, ?, ?, ?)';
+      conn.query(sqlQuery, [
+        latitude.toString(),
+        longitude.toString(),
+        status_code,
+        now.toString(),
+        agent_id
+      ]);
+      setState(() {});
+      print("Data Added");
+      // print(itemIdController.text);
+      // print(BinIdController.text);
+      // print(pickUpLatController.text);
+      // print(pickUpLngController.text);
+    });
   }
 
   @override
@@ -100,7 +151,7 @@ class _receiveTaskState extends State<receiveTask> {
               Container(
                 child: SafeArea(
                   child: AspectRatio(
-                    aspectRatio: 1,
+                    aspectRatio: 3 / 2.5,
                     child: GoogleMap(
                       // on below line setting camera position
                       initialCameraPosition: _kGoogle,
@@ -121,7 +172,7 @@ class _receiveTaskState extends State<receiveTask> {
                 ),
               ),
               SizedBox(
-                height: 30,
+                height: 5,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
@@ -137,10 +188,20 @@ class _receiveTaskState extends State<receiveTask> {
 
                           // marker added for current users location
                           _markers.add(Marker(
+                            markerId: MarkerId("1"),
+                            position: LatLng(value.latitude, value.longitude),
+                            infoWindow: InfoWindow(
+                              title:
+                                  ' คุณอยู่ที่นี่ ${value.latitude} ${value.longitude} ',
+                            ),
+                          ));
+
+                          _markers.add(Marker(
                             markerId: MarkerId("2"),
                             position: LatLng(value.latitude, value.longitude),
                             infoWindow: InfoWindow(
-                              title: ' ${value.latitude} ${value.longitude} ',
+                              title:
+                                  ' พิกัดของผู้ใช้ ${value.latitude} ${value.longitude} ',
                             ),
                           ));
 
@@ -163,7 +224,7 @@ class _receiveTaskState extends State<receiveTask> {
                 ],
               ),
               SizedBox(
-                height: 30,
+                height: 5,
               ),
               // //
               // SizedBox(
@@ -197,7 +258,7 @@ class _receiveTaskState extends State<receiveTask> {
               //   ),
               // ),
               SizedBox(
-                height: 30,
+                height: 5,
               ),
               SizedBox(
                 width: 360,
@@ -239,7 +300,7 @@ class _receiveTaskState extends State<receiveTask> {
                   ),
                 ),
               ),
-              const SizedBox(height: 30),
+              const SizedBox(height: 5),
               SizedBox(
                 width: 210,
                 child: ElevatedButton(
@@ -253,25 +314,64 @@ class _receiveTaskState extends State<receiveTask> {
                   child: const Text('คลิกดูรายการขยะ'),
                 ),
               ),
-              const SizedBox(height: 9),
+              const SizedBox(height: 5),
+              // SizedBox(
+              //   width: 210,
+              //   child: ElevatedButton(
+              //     style: style,
+              //     onPressed: () {
+              //       insertData();
+              //       Navigator.push(
+              //           context,
+              //           MaterialPageRoute(
+              //               builder: (context) => sendItemNearbyBin()));
+              //     },
+              //     child: const Text('กดเพื่อรับงาน'),
+              //   ),
+              // ),
               SizedBox(
                 width: 210,
                 child: ElevatedButton(
                   style: style,
                   onPressed: () {
-                    Navigator.push(
+                    try {
+                      insertData();
+                      Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => sendItemNearbyBin()));
+                            builder: (context) => sendItemNearbyBin()),
+                      );
+                    } catch (e) {
+                      // print the error message to the console
+                      print('Error occurred: $e\n');
+                    }
                   },
                   child: const Text('กดเพื่อรับงาน'),
                 ),
               ),
+
               const SizedBox(height: 35),
             ],
           ),
         ],
       ),
     );
+  }
+}
+
+class Mysql {
+  static String host = 'utcccs.cj5octuotk3f.ap-northeast-1.rds.amazonaws.com',
+      user = 'ewuser',
+      password = 'ewuser123',
+      db = 'ewastedb';
+
+  static int port = 3306;
+
+  Mysql();
+
+  Future<MySqlConnection> getConnection() async {
+    var settings = new ConnectionSettings(
+        host: host, port: port, user: user, password: password, db: db);
+    return await MySqlConnection.connect(settings);
   }
 }

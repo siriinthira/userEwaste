@@ -97,7 +97,7 @@ class _ArriveAtBinState extends State<ArriveAtBin> {
               Container(
                 child: SafeArea(
                   child: AspectRatio(
-                    aspectRatio: 1,
+                    aspectRatio: 3 / 3,
                     child: GoogleMap(
                       // on below line setting camera position
                       initialCameraPosition: _kGoogle,
@@ -118,7 +118,7 @@ class _ArriveAtBinState extends State<ArriveAtBin> {
                 ),
               ),
               SizedBox(
-                height: 30,
+                height: 5,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
@@ -159,8 +159,7 @@ class _ArriveAtBinState extends State<ArriveAtBin> {
                   ),
                 ],
               ),
-              const SizedBox(height: 30),
-              SizedBox(height: 15),
+              const SizedBox(height: 5),
               Text(
                 'แสกนคิวอาร์โค้ดเพื่อตรวจสอบหมายเลขบนถังขยะ',
                 style: TextStyle(fontWeight: FontWeight.w500, fontSize: 17),
@@ -174,7 +173,7 @@ class _ArriveAtBinState extends State<ArriveAtBin> {
                       border: OutlineInputBorder()),
                 ),
               ),
-              SizedBox(height: 15),
+              SizedBox(height: 5),
               SizedBox(
                 width: 240,
                 child: ElevatedButton(

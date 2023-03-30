@@ -30,9 +30,9 @@ class _NearByBinState extends State<NearByBin> {
   final List<Marker> _markers = <Marker>[
     Marker(
       markerId: MarkerId('1'),
-      position: LatLng(14.071295662171114, 100.61685753122902),
+      position: LatLng(14.079229887949122, 100.6037063614499),
       infoWindow: InfoWindow(
-        title: '$LatLng',
+        title: 'คุณอยู่ที่นี่ อุทยานวิทยาศาสตร์ประเทศไทย',
       ),
     ),
     Marker(
@@ -44,9 +44,9 @@ class _NearByBinState extends State<NearByBin> {
     ),
     Marker(
       markerId: MarkerId('3'),
-      position: LatLng(14.068236488924954, 100.6146223237546),
+      position: LatLng(14.071710129225782, 100.6167495927974),
       infoWindow: InfoWindow(
-        title: 'ศูนย์ประชุมธรรมศาสตร์รังสิต',
+        title: 'มหาวิทยาลัยธรรมศาสตร์รังสิต',
       ),
     ),
   ];
@@ -110,7 +110,7 @@ class _NearByBinState extends State<NearByBin> {
                           circleId: CircleId("1"),
                           center: LatLng(
                               (14.071295662171114), (100.61685753122902)),
-                          radius: 690,
+                          radius: 1000,
                           strokeWidth: 2,
                           fillColor: Color(0xFF006491).withOpacity(0.2),
                         ),
@@ -165,7 +165,7 @@ class _NearByBinState extends State<NearByBin> {
                 ],
               ),
               SizedBox(
-                height: 30,
+                height: 1,
               ),
               SizedBox(
                 width: 360,
@@ -188,7 +188,7 @@ class _NearByBinState extends State<NearByBin> {
                   ),
                 ),
               ),
-              const SizedBox(height: 30),
+              const SizedBox(height: 10),
               SizedBox(
                 width: 240,
                 child: ElevatedButton(

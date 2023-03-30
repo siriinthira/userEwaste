@@ -56,6 +56,7 @@ class _viewRequestState extends State<viewRequest> {
                   Text('จำนวน: ${item[index][3]}'),
                   Text('ละติจูด: ${item[index][12]} '),
                   Text('ลองจิจูด: ${item[index][13]} '),
+                  Text('เขต: ${item[index][14]} '),
                 ],
               ),
               // subtitle: Text('Item name: ${item[index][1]}'),
