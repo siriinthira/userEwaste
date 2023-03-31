@@ -1,15 +1,12 @@
-import 'dart:ffi';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+
 import 'package:mysql1/mysql1.dart';
-import 'dart:ui';
+
 import 'dart:async';
-import 'package:user/models/item_model.dart';
-import 'package:user/sourcecode/Frontend/form.dart';
-import 'package:user/views/qr_code/qr_code_scanner.dart';
-import 'package:user/widgets/dropdown_button.dart';
-import 'package:user/widgets/widget_text.dart';
-import 'package:url_launcher/url_launcher.dart';
+
+import 'package:user/views/user/qr_code/qr_code_scanner.dart';
+
 import 'package:geolocator/geolocator.dart';
 
 import 'package:google_maps_flutter/google_maps_flutter.dart';

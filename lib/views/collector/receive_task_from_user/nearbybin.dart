@@ -3,9 +3,9 @@ import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'dart:async';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:user/views/receive_task_from_user/arrive_at_bin.dart';
-import 'package:user/views/receive_task_from_user/main_location.dart';
-import 'package:user/views/receive_task_from_user/view_selected_item.dart';
+import 'package:user/views/collector/receive_task_from_user/arrive_at_bin.dart';
+import 'package:user/views/collector/receive_task_from_user/main_location.dart';
+import 'package:user/views/collector/receive_task_from_user/view_selected_item.dart';
 
 import 'package:location/location.dart';
 import 'delivery_success.dart';

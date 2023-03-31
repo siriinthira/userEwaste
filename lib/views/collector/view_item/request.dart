@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 
 import 'package:user/style/constants.dart';
-import 'package:user/models/data_model.dart';
+
 import 'package:mysql1/mysql1.dart';
 
 import 'package:user/main.dart';
+
+import 'package:user/models/data_model.dart';
+
+import 'package:geolocator/geolocator.dart';
 
 class RequestCollector extends StatefulWidget {
   @override
@@ -12,6 +16,7 @@ class RequestCollector extends StatefulWidget {
 }
 
 class _RequestCollectorState extends State<RequestCollector> {
+//select items from check box
   bool value = false;
   int _counter = 0;
   var db = new Mysql();
@@ -128,6 +133,38 @@ class SelectedItemsPage extends StatelessWidget {
     }
     await conn.close();
     itemListId++;
+  }
+
+  void insertData() async {
+    int user_id = 123;
+    double? pick_lat;
+    double? pick_lng;
+    var pick_detail = 'คลองหลวง';
+    DateTime? req_date;
+    int list_id = 25;
+    var pickup_type_id = 1;
+    var db = new Mysql();
+
+    final now = DateTime.now();
+    Position currentPosition = await Geolocator.getCurrentPosition();
+    double latitude = currentPosition.latitude;
+    double longitude = currentPosition.longitude;
+
+    db.getConnection().then((conn) {
+      String sqlQuery =
+          'INSERT INTO `ewastedb`.`request` (`user_id`, `pick_lat`, `pick_lng`, `pick_detail`, `req_date`, `list_id`,  `pickup_type_id`) VALUES (?, ?, ?, ?, ?, ?, ?)';
+      conn.query(sqlQuery, [
+        user_id,
+        latitude.toString(),
+        longitude.toString(),
+        pick_detail,
+        now.toString(),
+        list_id,
+        pickup_type_id
+      ]);
+      // setState(() {});
+      print("Data Added");
+    });
   }
 
   @override
@@ -304,18 +341,31 @@ class SelectedItemsPage extends StatelessWidget {
                                       'Error inserting selected items: $error');
                                 });
                               },
-                              child: Container(
-                                alignment: Alignment.center,
-                                height: 56,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(40),
-                                  color: Colors.green,
-                                ),
-                                child: Text(
-                                  "ยืนยันรายการขยะ",
-                                  style: ksubtitle.copyWith(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold),
+                              child: GestureDetector(
+                                onTap: () {
+                                  insertData();
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => MyHomePage(
+                                        title: '',
+                                      ),
+                                    ),
+                                  );
+                                },
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  height: 56,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(40),
+                                    color: Colors.green,
+                                  ),
+                                  child: Text(
+                                    "ยืนยันรายการขยะ",
+                                    style: ksubtitle.copyWith(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold),
+                                  ),
                                 ),
                               ),
                             ),
@@ -328,4 +378,9 @@ class SelectedItemsPage extends StatelessWidget {
               ],
             )));
   }
+/*
+
+SELECT * FROM ewastedb.request join item_list on request.list_id = item_list.list_id ;
+
+ */
 }

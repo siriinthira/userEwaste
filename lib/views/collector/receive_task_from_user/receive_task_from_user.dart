@@ -4,7 +4,7 @@ import 'dart:async';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_maps_routes/google_maps_routes.dart';
 import 'package:mysql1/mysql1.dart';
-import 'package:user/views/receive_task_from_user/view_selected_item.dart';
+import 'package:user/views/collector/receive_task_from_user/view_selected_item.dart';
 import 'send_item_nearby_bin.dart';
 import 'package:permission_handler/permission_handler.dart';
 

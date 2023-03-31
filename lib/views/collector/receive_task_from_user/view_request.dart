@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mysql1/mysql1.dart';
-import 'package:user/views/receive_task_from_user/receive_task_from_user.dart';
+import 'package:user/models/data_model.dart';
+import 'package:user/views/collector/receive_task_from_user/receive_task_from_user.dart';
 
 class viewRequest extends StatefulWidget {
   const viewRequest({super.key});

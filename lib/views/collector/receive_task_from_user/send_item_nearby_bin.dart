@@ -2,47 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'dart:async';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:mysql1/mysql1.dart';
+import 'package:user/views/collector/receive_task_from_user/main_location.dart';
+import 'package:user/views/collector/receive_task_from_user/view_selected_item.dart';
 
-import '../qr_code/qr_code_scanner.dart';
 import 'delivery_success.dart';
+import 'nearbybin.dart';
 
-//insert a textfield bin_id using mysql1 and the last elevated button called 'ส่งขยะเรียบร้อยแล้ว' with submit function
-
-class ArriveAtBin extends StatefulWidget {
-  const ArriveAtBin({super.key});
+class sendItemNearbyBin extends StatefulWidget {
+  const sendItemNearbyBin({super.key});
 
   @override
-  State<ArriveAtBin> createState() => _ArriveAtBinState();
+  State<sendItemNearbyBin> createState() => _sendItemNearbyBinState();
 }
 
-class _ArriveAtBinState extends State<ArriveAtBin> {
-  //insert item into table
-  var db = new Mysql();
-  var bin_id = "";
-  final binIdController = TextEditingController();
-
-  void insertData() async {
-    db.getConnection().then((conn) {
-      String sqlQuery =
-          'INSERT INTO `ewastedb`.`request` (`bin_id`) VALUES (?)';
-
-      conn.query(sqlQuery, [
-        binIdController.text,
-      ]);
-      setState(() {});
-      print("Data Added");
-      print(binIdController.text);
-    });
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    binIdController.dispose();
-  }
-
-  //Calculate Coin - ยังไม้ได้ใช้
+class _sendItemNearbyBinState extends State<sendItemNearbyBin> {
   void calculateCoin(int weight) {
     if (weight >= 1 && weight < 5) {
       var coin = 0.25;
@@ -61,11 +34,19 @@ class _ArriveAtBinState extends State<ArriveAtBin> {
   // on below line we have created the list of markers
   final List<Marker> _markers = <Marker>[
     Marker(
-        markerId: MarkerId('1'),
-        position: LatLng(20.42796133580664, 75.885749655962),
-        infoWindow: InfoWindow(
-          title: 'My Position',
-        )),
+      markerId: MarkerId('1'),
+      position: LatLng(20.42796133580664, 75.885749655962),
+      infoWindow: InfoWindow(
+        title: 'My Position',
+      ),
+    ),
+    Marker(
+      markerId: MarkerId('2'),
+      position: LatLng(14.07892748920073, 100.60297357512478),
+      infoWindow: InfoWindow(
+        title: 'อุทยานวิทยาศาสตร์ประเทศไทย',
+      ),
+    ),
   ];
 
   // created method for getting user current location
@@ -87,7 +68,7 @@ class _ArriveAtBinState extends State<ArriveAtBin> {
     var user_lng = 100.60415036236294;
     return Scaffold(
       appBar: AppBar(
-        title: Text('ผู้อาสาเดินทางมาถึงถังขยะ'),
+        title: Text('รับงานจากผู้ใช้'),
       ),
       body: ListView(
         children: [
@@ -97,7 +78,7 @@ class _ArriveAtBinState extends State<ArriveAtBin> {
               Container(
                 child: SafeArea(
                   child: AspectRatio(
-                    aspectRatio: 3 / 3,
+                    aspectRatio: 1,
                     child: GoogleMap(
                       // on below line setting camera position
                       initialCameraPosition: _kGoogle,
@@ -118,7 +99,7 @@ class _ArriveAtBinState extends State<ArriveAtBin> {
                 ),
               ),
               SizedBox(
-                height: 5,
+                height: 10,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
@@ -137,7 +118,9 @@ class _ArriveAtBinState extends State<ArriveAtBin> {
                             markerId: MarkerId("2"),
                             position: LatLng(value.latitude, value.longitude),
                             infoWindow: InfoWindow(
-                              title: ' ${value.latitude} ${value.longitude} ',
+                              title:
+                                  // 'พิกัดของผู้ใช้ : 14.07866732509696, 100.60400354337204'
+                                  ' คุณอยู่ที่นี่: ${value.latitude} ${value.longitude} ',
                             ),
                           ));
 
@@ -159,71 +142,81 @@ class _ArriveAtBinState extends State<ArriveAtBin> {
                   ),
                 ],
               ),
+              SizedBox(
+                height: 10,
+              ),
+              SizedBox(
+                width: 360,
+                height: 100,
+                child: Card(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    children: <Widget>[
+                      Text('พิกัดของผู้ใช้'),
+                      const ListTile(
+                        leading: Icon(Icons.share_location),
+                        title: Text('อุทยานวิทยาศาสตร์ประเทศไทย'),
+                        subtitle: Text(
+                          '14.079379523123846, 100.60396022687425',
+                          style: TextStyle(color: Colors.black),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              SizedBox(
+                width: 360,
+                height: 65,
+                child: Card(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      const ListTile(
+                        leading: Icon(Icons.generating_tokens),
+                        title: Text('จำนวนเหรียญที่ได้รับ : 0.25 เหรียญ'),
+                        // subtitle:
+                        //     Text('Music by Julie Gable. Lyrics by Sidney Stein.'),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(height: 10),
+              SizedBox(
+                width: 240,
+                child: ElevatedButton(
+                  style: style,
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ViewSelectedItem()));
+                  },
+                  child: const Text('คลิกดูรายการขยะ'),
+                ),
+              ),
               const SizedBox(height: 5),
-              Text(
-                'แสกนคิวอาร์โค้ดเพื่อตรวจสอบหมายเลขบนถังขยะ',
-                style: TextStyle(fontWeight: FontWeight.w500, fontSize: 17),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(24.0),
-                child: TextFormField(
-                  controller: binIdController,
-                  decoration: const InputDecoration(
-                      hintText: "กรุณาแสกนคิวอาร์เพื่อกรอกหมายเลขบนถังขยะ",
-                      border: OutlineInputBorder()),
-                ),
-              ),
-              SizedBox(height: 5),
               SizedBox(
                 width: 240,
                 child: ElevatedButton(
                   style: style,
                   onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => QRCodeScanner()));
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => NearByBin()));
                   },
-                  child: const Text('แสกนคิวอาร์โค้ด'),
+                  child: const Text('ค้นหาถังขยะในพื้นที่'),
                 ),
               ),
-              const SizedBox(height: 9),
-              SizedBox(
-                width: 240,
-                child: ElevatedButton(
-                  style: style,
-                  onPressed: () {
-                    insertData();
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => SuccessDelivery()));
-                  },
-                  child: const Text('ส่งขยะเรียบร้อย'),
-                ),
-              ),
+              const SizedBox(height: 5),
               const SizedBox(height: 35),
             ],
           ),
         ],
       ),
     );
-  }
-}
-
-class Mysql {
-  static String host = 'utcccs.cj5octuotk3f.ap-northeast-1.rds.amazonaws.com',
-      user = 'ewuser',
-      password = 'ewuser123',
-      db = 'ewastedb';
-
-  static int port = 3306;
-
-  Mysql();
-
-  Future<MySqlConnection> getConnection() async {
-    var settings = new ConnectionSettings(
-        host: host, port: port, user: user, password: password, db: db);
-    return await MySqlConnection.connect(settings);
   }
 }
